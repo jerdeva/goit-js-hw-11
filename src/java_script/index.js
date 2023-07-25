@@ -8,9 +8,8 @@ import { fetchImgs } from './fetchPage';
 
 const form = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
-const load_more_btn = document.querySelector('.load-more').hidden= true;
+const load_more_btn = (document.querySelector('.load-more').hidden = true);
 const jsSafe = document.querySelector('.jsSafe');
-console.log('gallery:last-child');
 form.addEventListener('submit', onFormSubmit);
 const simpleLightbox = new SimpleLightbox('.gallery a');
 
@@ -21,8 +20,10 @@ let page = 1;
 async function onFormSubmit(event) {
   try {
     event.preventDefault();
+    gallery.innerHTML = '';
+    page = 1;
     Loading.hourglass();
-    searchValue = form.elements.searchQuery.value.trim();
+    searchValue = event.currentTarget.elements.searchQuery.value.trim();
     const isValidInput = /^[a-zA-Z0-9\s]+$/.test(searchValue);
     if (!isValidInput || searchValue === '') {
       Report.warning('Invalid input');
@@ -37,11 +38,9 @@ async function onFormSubmit(event) {
       gallery.innerHTML = createMarkup(hits);
       simpleLightbox.refresh();
       event.target.reset();
-
     }
-    
   } catch (error) {
-    Report.warning( 'Please enter a valid search query.');
+    Report.warning('Please enter a valid search query.');
     console.log(error);
   } finally {
     Loading.remove();

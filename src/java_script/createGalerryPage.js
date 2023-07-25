@@ -36,5 +36,4 @@ function createMarkup(arr) {
     .join('');
 }
 
-
 export { createMarkup };
